@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Layanan Klinik Gigi A3C</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script type='text/javascript' src='http://code.jquery.com/jquery-1.8.3.js'></script>
+		<script type="text/javascript" src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.js"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	</head>
+	<body class="subpage">
+
+		<!-- Header -->
+			<header id="header">
+				<nav class="left">
+					<a href="#menu"><span>Menu</span></a>
+				</nav>
+				<a href="index.html" class="logo">KLINIK GIGI A3C</a>
+			</header>
+
+		<!-- Menu -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="dokter.html">Dokter</a></li>
+					<li><a href="pasien.html">Pasien</a></li>
+					<li><a href="layanan.html">Layanan</a></li>
+					<li><a href="transaksi.html">Transaksi</a></li>					
+				</ul>
+			</nav>
+			
+		<!-- Main -->
+			<section id="main" class="wrapper">
+				<div class="inner">
+					<header class="align-center">
+                            <h1>Daftar Layanan Klinik Gigi A3C</h1>
+							<p>Layanan yang Kami Sediakan Cukup Lengkap dan Memuaskan Anda</p>
+					</header>
+						<table id="page-layanan" class="table table-hover align-center">
+						<tr>
+								<th>No</th>
+								<th>ID Layanan</th>
+								<th>Nama Layanan</th>
+								<th>Harga Layanan</th>
+								<th>Keterangan</th>
+						</tr>
+			<?php 
+		@include 'koneksi.php';
+		$no = 1;
+		$data = mysqli_query($koneksi,"select * from dokter");
+		while($d = mysqli_fetch_array($data)){
+			?>
+			<tr>
+				<td><?php echo $no++; ?></td>
+				<td><?php echo $d['id_layanan']; ?></td>
+				<td><?php echo $d['nama_layanan']; ?></td>
+				<td><?php echo $d['harga_layanan']; ?></td>
+				<td><?php echo $d['keterangan']; ?></td>
+			</tr>
+			<?php 
+		}
+		?>
+	</table>
+					<ul class="actions vertical">
+					<a href="tambah_layanan.html" class="button fit">Tambah Layanan</a>
+					<a href="ubah_dokter.php?id=<?php echo $d['id']; ?>" class="button fit">Ubah</a>
+					<a href="hapus_dokter.php?id=<?php echo $d['id']; ?>"class="button fit">Hapus</a>
+					</ul>
+</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<h2>LAYANAN INFORMASI</h2>
+					<ul class="actions">
+						<li><span class="icon fa-phone"></span> <a href="#">(000) 000-0000</a></li>
+						<li><span class="icon fa-envelope"></span> <a href="#">informasi@3ac.id</a></li>
+						<li><span class="icon fa-map-marker"></span> Jln. Veteran No. 8, Ketawanggede, Kecamatan Lowokwaru, Kota Malang, Jawa Timur 65145</li>
+					</ul>
+				</div>
+				<div class="copyright">
+					&copy; A3C Clinic.
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+		<script>
+        function initShowLayanan() {
+        $.ajax({
+            url: 'https://gigiplus.herokuapp.com/gigiplus/api/layanans',
+            type: 'GET',
+			accepts: "application/json; charset=utf-8",
+            success: function(dataObject) {
+				console.log(dataObject[0]);
+				console.log("---------------");
+                data = dataObject;
+				for (var i = 0; i < dataObject.length; i++) {
+				console.log(i);
+				var appendList = '<tr><td>'+(i+1)+'</td>'+
+				'<td>'+dataObject[i].id+'</td>'+
+				'<td>'+dataObject[i].nama+'</td>'+
+				'<td>'+dataObject[i].harga+'</td>'+
+				'<td>'+dataObject[i].keterangan+'</td></tr>'+
+            $('#page-layanan').append(appendList);
+			console.log(appendList.length);
+		}
+            },
+            
+        });
+    }
+	initShowLayanan();
+		</script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

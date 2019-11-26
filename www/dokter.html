@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Dokter Klinik Gigi A3C</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script type='text/javascript' src='http://code.jquery.com/jquery-1.8.3.js'></script>
+		<script type="text/javascript" src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.js"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	
+	
+	</head>
+	<body class="subpage">
+
+		<!-- Header -->
+			<header id="header">
+				<nav class="left">
+					<a href="#menu"><span>Menu</span></a>
+				</nav>
+				<a href="index.html" class="logo">KLINIK GIGI A3C</a>
+			</header>
+
+		<!-- Menu -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="dokter.html">Dokter</a></li>
+					<li><a href="pasien.html">Pasien</a></li>
+					<li><a href="layanan.html">Layanan</a></li>
+					<li><a href="transaksi.html">Pembayaran</a></li>					
+				</ul>
+			</nav>
+			
+		<!-- Main -->
+			<section id="main" class="wrapper">
+				<div class="inner">
+					<header class="align-center">
+                            <h1>Daftar Dokter Klinik Gigi A3C</h1>
+							<p>Dokter kami adalah dokter yang terbaik</p>
+					</header>
+						<table id="page-dokter" class="table table-hover align-center">
+						<tr>
+								<th>No</th>
+								<th>ID Dokter</th>
+								<th>Nama Dokter</th>
+								<th>Surat Izin</th>
+								<th>Spesialis</th>
+								<th>No. Telp</th>
+								<th>Alamat</th>
+						</tr>
+						
+			<!-- <?php 
+		@include 'koneksi.php';
+		$no = 1;
+		$data = mysqli_query($koneksi,"select * from dokter");
+		while($d = mysqli_fetch_array($data)){
+			?>
+			<tr>
+				<td><?php echo $no++; ?></td>
+				<td><?php echo $d['id_dokter']; ?></td>
+				<td><?php echo $d['nama_dokter']; ?></td>
+				<td><?php echo $d['surat_izin']; ?></td>
+				<td><?php echo $d['spesialis']; ?></td>
+				<td><?php echo $d['telp_dokter']; ?></td>
+				<td><?php echo $d['alamat']; ?></td>
+			</tr>
+			<?php 
+		}
+		?> -->
+	</table>
+					<ul class="actions vertical">
+					<a href="tambah_dokter.html" class="button fit">Tambah Dokter</a>
+					<a href="ubah_dokter.php?id=<?php echo $d['id']; ?>" class="button fit">Ubah</a>
+					<a href="hapus_dokter.php?id=<?php echo $d['id']; ?>"class="button fit">Hapus</a>
+					</ul>
+</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<h2>LAYANAN INFORMASI</h2>
+					<ul class="actions">
+						<li><span class="icon fa-phone"></span> <a href="#">(000) 000-0000</a></li>
+						<li><span class="icon fa-envelope"></span> <a href="#">informasi@3ac.id</a></li>
+						<li><span class="icon fa-map-marker"></span> Jln. Veteran No. 8, Ketawanggede, Kecamatan Lowokwaru, Kota Malang, Jawa Timur 65145</li>
+					</ul>
+				</div>
+				<div class="copyright">
+					&copy; A3C Clinic.
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+		<script>
+        function initShowDokter() {
+        $.ajax({
+            url: 'https://gigiplus.herokuapp.com/gigiplus/api/dokters',
+            type: 'GET',
+			accepts: "application/json; charset=utf-8",
+            success: function(dataObject) {
+				console.log(dataObject[1]);
+				console.log("---------------");
+                data = dataObject;
+				for (var i = 0; i < dataObject.length; i++) {
+				var appendList = '<tr><td>'+(i+1)+'</td>'+
+				'<td>'+dataObject[i].id+'</td>'+
+				'<td>'+dataObject[i].nama+'</td>'+
+				'<td>'+dataObject[i].sip+'</td>'+
+				'<td>'+dataObject[i].spesialis+'</td>'+
+				'<td>'+dataObject[i].alamat+'</td>'+
+				'<td>'+dataObject[i].notelp+'</td></tr>'+
+            $('#page-dokter').append(appendList);
+        }
+            },
+            
+        });
+    }
+	initShowDokter();
+		</script>
+
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
